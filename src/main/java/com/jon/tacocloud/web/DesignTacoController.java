@@ -73,9 +73,9 @@ public class DesignTacoController {
             @Valid Taco taco, Errors errors,
             @ModelAttribute TacoOrder tacoOrder) {
 
-        if (errors.hasErrors()) {
-            return "design";
-        }
+        // if (errors.hasErrors()) {
+            // return "design";
+        // }
 
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
