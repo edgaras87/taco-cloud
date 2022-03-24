@@ -3,6 +3,7 @@ package com.jon.tacocloud.web;
 import javax.validation.Valid;
 
 import com.jon.tacocloud.TacoOrder;
+import com.jon.tacocloud.data.OrderRepository;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -14,26 +15,31 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
+    private OrderRepository orderRepo;
+
+    public OrderController(OrderRepository orderRepo) {
+        this.orderRepo = orderRepo;
+    }
+
     @GetMapping("/current")
     public String orderForm() {
         return "orderForm";
     }
 
-
     @PostMapping
     public String processOrder(@Valid TacoOrder order, Errors errors,
             SessionStatus sessionStatus) {
         // if (errors.hasErrors()) {
-        //     return "orderForm";
+        // return "orderForm";
         // }
-
+        
+        orderRepo.save(order);
         log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
 
