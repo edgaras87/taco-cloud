@@ -1,8 +1,12 @@
 package com.jon.tacocloud;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 // import javax.validation.constraints.Digits;
 // import javax.validation.constraints.NotBlank;
@@ -13,12 +17,18 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class TacoOrder {
+@Table //(Taco_Order) by default 
+public class TacoOrder implements Serializable {
 
+    // what is this https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+    private static final long serialVersionUID = 1L;
+
+    @Id
     private Long id;
 
-    private Date placedAt;
+    private Date placedAt = new Date();
 
+    // @Column("delivery_name") by default
     // @NotBlank(message="Delivery name is required")
     private String deliveryName;
   
