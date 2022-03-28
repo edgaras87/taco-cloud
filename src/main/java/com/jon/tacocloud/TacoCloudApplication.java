@@ -1,7 +1,12 @@
 package com.jon.tacocloud;
 
+import com.jon.tacocloud.Ingredient.Type;
+import com.jon.tacocloud.data.IngredientRepository;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TacoCloudApplication {
@@ -16,7 +21,7 @@ public class TacoCloudApplication {
 	 *  databases */
 	/** CommandLineRunner - accepts a String vararg, which is a raw 
 	 * 		representation of arguments passed on the command line.	*/
-	/*
+	
 	@Bean
 	public CommandLineRunner dataLoader(IngredientRepository repo) {
 		return args -> {
@@ -32,6 +37,7 @@ public class TacoCloudApplication {
 			repo.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
 		};
 	}
+	/*
 	*/
 
 

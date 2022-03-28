@@ -1,4 +1,4 @@
-delete from
+/*delete from
     Ingredient_Ref;
 
 delete from
@@ -58,4 +58,4 @@ values
 insert into
     Ingredient (id, name, type)
 values
-    ('SRCR', 'Sour Cream', 'SAUCE');
+    ('SRCR', 'Sour Cream', 'SAUCE');*/
