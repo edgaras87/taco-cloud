@@ -9,6 +9,7 @@ import java.util.List;
 
 import lombok.Data;
 
+// Members of the aggregate as subdocument. Doesn’t need to be annotated as a @Document, nor does it need an @Id property
 @Data
 public class Taco implements Serializable {
 

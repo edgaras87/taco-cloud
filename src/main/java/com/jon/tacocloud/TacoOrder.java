@@ -1,8 +1,12 @@
 package com.jon.tacocloud;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 // import javax.validation.constraints.Digits;
 // import javax.validation.constraints.NotBlank;
@@ -12,10 +16,14 @@ import java.util.List;
 
 import lombok.Data;
 
+//  Root of the aggregate
 @Data
-public class TacoOrder {
+@Document
+public class TacoOrder implements Serializable {
 
-    private Long id;
+    // Need to be Serializable. By choosing String, you get a databasemanaged ID assignment.
+    @Id
+    private String id;
 
     private Date placedAt;
 
