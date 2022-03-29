@@ -1,3 +1,4 @@
+/*
 delete from
     Ingredient_Ref;
 
@@ -59,3 +60,4 @@ insert into
     Ingredient (id, name, type)
 values
     ('SRCR', 'Sour Cream', 'SAUCE');
+*/
