@@ -7,7 +7,6 @@ package com.jon.tacocloud.security;
 // import org.springframework.security.core.authority.SimpleGrantedAuthority;
 // import org.springframework.security.core.userdetails.User;
 // import org.springframework.security.core.userdetails.UserDetails;
- import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 // 2.
 import com.jon.tacocloud.User;
@@ -89,7 +88,7 @@ public class SecurityConfig {
                                               // (by Default landing page will be last url request),
                                               // true forces to land to this page whatever it takes, even if it not
                                               // exists.
-
+                .and().oauth2Login().loginPage("/login")
                 // log out of the application. (session will be cleared)
                 .and().logout()
                 .logoutSuccessUrl("/") // default redirected to the login page
