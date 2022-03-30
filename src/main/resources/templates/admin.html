@@ -7,7 +7,9 @@
 
 <body>
     <h1>Admin</h1>
-    <a th:href="@{/}">Go back to home page...</a><br>
+    <form method="POST" th:action="@{/logout}" id="logoutForm">
+        <input type="submit" value="Logout" />
+    </form>
     <form method="POST" th:action="@{/admin/deleteOrders}">
         <label>Delete all database: </label>
         <input type="submit" value="delete">

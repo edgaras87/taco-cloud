@@ -26,7 +26,18 @@ public class SecurityConfig {
                 
                 // all other requests permitted for all users
                 .anyRequest().permitAll() // this should always in the end
-                
+            
+            .and().formLogin().loginPage("/login")
+                //.loginProcessingUrl("/authenticate") // for th:action="@{/authenticate} default path /login"
+                //.usernameParameter("user") // default username
+                //.passwordParameter("pwd") // default password
+                .defaultSuccessUrl("/", true) // in successful login, landing page will be home.html,
+                                                // (by Default landing page will be last url request),
+                                                // true forces to land to this page whatever it takes, even if it not exists. 
+            
+            // log out of the application. (session will be cleared)
+            .and().logout()
+                .logoutSuccessUrl("/") // default redirected to the login page          
             // turn off csrf protection
             //.and().csrf().disable()
 
@@ -44,8 +55,7 @@ public class SecurityConfig {
                 //  "T(java.util.Calendar).DAY_OF_WEEK) == " +
                 //  "T(java.util.Calendar).TUESDAY")
 
-            .and()
-            .build();
+            .and().build();
 
     }
 }
