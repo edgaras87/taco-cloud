@@ -1,14 +1,27 @@
 package com.jon.tacocloud.security;
 
+// 1. for In-memory user details service
+// import java.util.ArrayList;
+// import java.util.Arrays;
+// import java.util.List;
+// import org.springframework.security.core.authority.SimpleGrantedAuthority;
+// import org.springframework.security.core.userdetails.User;
+// import org.springframework.security.core.userdetails.UserDetails;
+ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+// 2.
 import com.jon.tacocloud.User;
 import com.jon.tacocloud.data.UserRepository;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,13 +31,30 @@ import org.springframework.security.web.SecurityFilterChain;
 // more about this https://www.baeldung.com/spring-security-method-security
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // 1. In-memory user details service. (does not work together with 2. , some changes must be done)
+    /*@Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        List<UserDetails> usersList = new ArrayList<>();
+        usersList.add(new User(
+                "buzz", encoder.encode("pass"),
+                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
+        usersList.add(new User(
+                "woody", encoder.encode("pass"),
+                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
+        return new InMemoryUserDetailsManager(usersList);
+    }*/
+
+    // 2.
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepo) {
+
+
         return username -> {
             User user = userRepo.findByUsername(username);
             if (user != null) {
@@ -32,7 +62,7 @@ public class SecurityConfig {
             }
             throw new UsernameNotFoundException("User '" + username + "' not found");
         };
-    }
+    }/**/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -83,4 +113,6 @@ public class SecurityConfig {
                 .and().build();
 
     }
+
+
 }
