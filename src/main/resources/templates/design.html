@@ -8,13 +8,23 @@
 
 <body>
     <h1>Design your taco!</h1>
-    <a th:href="@{/}">Go back to home page...</a><br>
+    <a th:href="@{/}">Go back to home page...</a>
+
+    <form method="POST" th:action="@{/logout}" id="logoutForm">
+        <input type="submit" value="Logout" />
+    </form>
+
     <img th:src="@{/images/TacoCloud.jpg}" />
 
-    <form method="POST" th:object="${taco}">
+    <!--  With the help of Thymeleaf and 'th:action="@{/design}' attribute is needed to prevent CSRF attack  -->
+    <form method="POST" th:action="@{/design}" th:object="${taco}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+        <!-- CSRF token in a hidden field to prevent CSRF attack -->
+        <!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
 
         <!-- <span class="validationError" th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">Ingredient -->
-            <!-- Error</span>  -->
+        <!-- Error</span>  -->
 
         <div class="grid">
             <div class="ingredient-group" id="wraps">
