@@ -48,3 +48,16 @@ spring:
                     google:
                         client-id: 465024727831-cp2i4ge20f53gtkjkhlk278n7rue434u.apps.googleusercontent.com
                         client-secret: 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
+
+
+# --- HTTPS in the embedded server ---
+# *https://localhost:8443/
+# *Create a keystore witm cmd: $ keytool -keystore mykeys.jks -genkey -alias tomcat -keyalg RSA
+server:
+    port: 8443
+    #port: 0  #(random port) server.
+    ssl:
+        #key-store: file:///C:/Users/Klaus/Documents/VisualStudio/Taco_cloud_HTTPS_keystore/mykeys.jks   # -- URL to load it from the filesystem --
+        key-store: classpath:mykeys.jks # -- in application resource directory --
+        key-store-password: asdasd
+        key-password: asdasd
