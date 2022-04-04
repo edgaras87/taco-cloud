@@ -7,8 +7,9 @@ spring:
         password: root
         url: jdbc:mysql://localhost:3306/tacocloud_jpa
         #url: jdbc:mysql://localhost:3306/tacocloud_jpa?createDatabaseIfNotExist=true
-
-
+        # (deprecated) schema: taco-schema.sql, order-schema.sql, ingredient-schema.sql, user-schema.sql
+        # (deprecated) data: ingredient.sql
+        # (other data source will be ignored) jndi-name: java:/comp/env/jdbc/tacoCloudDS 
 
 # -- Sql configuration --
     jpa:
@@ -28,6 +29,8 @@ spring:
     sql:
         init:
             mode: always
+            # -- database initialization scripts to run when the application starts --
+            #data-locations: taco-schema.sql, order-schema.sql, ingredient-schema.sql, user-schema.sql,ingredient.sql
 
 
 
