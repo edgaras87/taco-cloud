@@ -7,9 +7,7 @@ import javax.validation.Valid;
 import com.jon.tacocloud.TacoOrder;
 import com.jon.tacocloud.User;
 import com.jon.tacocloud.data.OrderRepository;
-import com.jon.tacocloud.data.UserRepository;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,19 +27,16 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
-@ConfigurationProperties(prefix = "taco.orders")
 public class OrderController {
 
-    private int pageSize = 20;
+    private OrderProps props;
     private OrderRepository orderRepo;
     //1. private UserRepository userRepository;
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-    
-    public OrderController(OrderRepository orderRepo, UserRepository userRepositor) {
+   
+    public OrderController(OrderRepository orderRepo, 
+                        OrderProps props) {
         this.orderRepo = orderRepo;
+        this.props = props;
         //1. this.userRepository = userRepositor;
     }
 
@@ -88,7 +83,7 @@ public class OrderController {
 
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
-        Pageable pageable = PageRequest.of(0, pageSize);
+        Pageable pageable = PageRequest.of(0, props.getPageSize());
         model.addAttribute("orders", orderRepo.findByUser(user, pageable));
         return "orderList";
     }
