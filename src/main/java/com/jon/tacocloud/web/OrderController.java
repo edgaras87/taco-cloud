@@ -9,9 +9,12 @@ import com.jon.tacocloud.User;
 import com.jon.tacocloud.data.OrderRepository;
 import com.jon.tacocloud.data.UserRepository;
 
-
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,11 +29,16 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
+@ConfigurationProperties(prefix = "taco.orders")
 public class OrderController {
 
+    private int pageSize = 20;
     private OrderRepository orderRepo;
     //1. private UserRepository userRepository;
 
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
     
     public OrderController(OrderRepository orderRepo, UserRepository userRepositor) {
         this.orderRepo = orderRepo;
@@ -77,4 +85,12 @@ public class OrderController {
 
         return "redirect:/";
     }
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+        Pageable pageable = PageRequest.of(0, pageSize);
+        model.addAttribute("orders", orderRepo.findByUser(user, pageable));
+        return "orderList";
+    }
+
 }

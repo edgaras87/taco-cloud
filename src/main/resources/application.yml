@@ -22,7 +22,7 @@ spring:
             # -- when the application starts. Drop and create new tables (create, create-drop, validate, update, none)
             # -- Only for testing purpose - comment this in production
             # -- https://stackoverflow.com/questions/438146/what-are-the-possible-values-of-the-hibernate-hbm2ddl-auto-configuration-and-wha#:~:text=So%20the%20list%20of%20possible%20options%20are%2C,with%20the%20schema%2C%20makes%20no%20changes%20to%20the%20database
-            ddl-auto: create
+            ddl-auto: none
         # -- Log JPA queries (Comment this in production) --
         show-sql: false
     # -- Without this, initial sql files (schema.sql, data.sql) won't be executed --
@@ -47,7 +47,8 @@ spring:
                 registration:
                     google:
                         client-id: 465024727831-cp2i4ge20f53gtkjkhlk278n7rue434u.apps.googleusercontent.com
-                        client-secret: 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
+                        client-secret: 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    
+    # Predefined variables: https://code.visualstudio.com/docs/editor/variables-reference
 
 
 # --- HTTPS in the embedded server ---
@@ -62,13 +63,21 @@ spring:
         #key-store-password: asdasd
         #key-password: asdasd
 
+
+# Predefined variables
 # -- log configuration --
 logging:
     file:
         path: /var/logs/
-        file: TacoCloud.log
+        name: TacoCloud.log
     # level:
     #     root: WARN 
     #     org:
     #         springframework:
     #             security: DEBUG
+
+
+myVar: my property ${logging.file.path} # https://stackabuse.com/spring-boot-configuring-properties/, https://forum.camunda.org/t/could-not-resolve-placeholder-feign-client-config-remoterepositoryservice-url/23838/5
+taco:
+    orders:
+        pageSize: 5 # $ export TACO_ORDERS_PAGESIZE=10
