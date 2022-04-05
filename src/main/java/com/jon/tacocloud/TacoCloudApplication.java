@@ -3,10 +3,12 @@ package com.jon.tacocloud;
 import com.jon.tacocloud.Ingredient.Type;
 import com.jon.tacocloud.data.IngredientRepository;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class TacoCloudApplication {
@@ -23,7 +25,8 @@ public class TacoCloudApplication {
 	 * 		representation of arguments passed on the command line.	*/
 	
 	@Bean
-	public CommandLineRunner dataLoader(IngredientRepository repo) {
+	@Profile({"dev", "qa"})
+	public CommandLineRunner dataLoaderCLR(IngredientRepository repo) {
 		return args -> {
 			repo.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
 			repo.save(new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
@@ -43,9 +46,9 @@ public class TacoCloudApplication {
 	/** ApplicationRunner - accepts an ApplicationArguments parameter that
 	 * 		offers methods for accessing the arguments as parsed components
 	 * 		of the command line. */
-	/*
 	@Bean
-	public ApplicationRunner dataLoader(IngredientRepository repo) {
+	@Profile({"!dev"})
+	public ApplicationRunner dataLoaderAR(IngredientRepository repo) {
 		return args -> {
 			repo.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
 			repo.save(new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
@@ -59,7 +62,7 @@ public class TacoCloudApplication {
 			repo.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
 		};
 	}
-	*/
+
 
 
 }
