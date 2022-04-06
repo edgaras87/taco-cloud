@@ -43,7 +43,7 @@ spring:
         user: 
             name: user
             password: pass
-            roles: USER
+            roles: ADMIN
         # -- how this is done: https://spring.io/guides/tutorials/spring-boot-oauth2/ --
         oauth2:
             client:
@@ -79,8 +79,12 @@ logging:
     #         springframework:
     #             security: DEBUG
 
-
+# My custom properties
 myVar: my property ${logging.file.path} # https://stackabuse.com/spring-boot-configuring-properties/, https://forum.camunda.org/t/could-not-resolve-placeholder-feign-client-config-remoterepositoryservice-url/23838/5
 taco:
     orders:
         pageSize: 7 # $ export TACO_ORDERS_PAGESIZE=10
+    discount:
+        codes:
+            Cheddar: 25
+            CornTortilla: 10

@@ -8,5 +8,10 @@
     "name": "my-var",
     "type": "java.lang.String",
     "description": "property just for testing."
+  },
+  {
+    "name": "taco.discount.codes",
+    "type": "java.util.Map<String, Integer>",
+    "description": "A map of discount codes to a discount percentage."
   }
 ]}
