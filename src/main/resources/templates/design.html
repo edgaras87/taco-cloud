@@ -8,6 +8,7 @@
 
 <body>
     <h1>Design your taco!</h1>
+    <h2>Feelin' hungry, <span th:text="${user.fullname}">NAME</span>?</h2>
     <a th:href="@{/}">Go back to home page...</a>
 
     <form method="POST" th:action="@{/logout}" id="logoutForm">

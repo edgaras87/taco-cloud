@@ -1,5 +1,6 @@
 package com.jon.tacocloud.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,8 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 import com.jon.tacocloud.Ingredient;
 import com.jon.tacocloud.Taco;
 import com.jon.tacocloud.TacoOrder;
+import com.jon.tacocloud.User;
 import com.jon.tacocloud.Ingredient.Type;
 import com.jon.tacocloud.data.IngredientRepository;
+import com.jon.tacocloud.data.UserRepository;
 
 import org.springframework.validation.Errors;
 
@@ -31,11 +34,14 @@ import org.springframework.validation.Errors;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
+    private UserRepository userRepo;
 
     @Autowired
     public DesignTacoController(
-            IngredientRepository ingredientRepo) {
+            IngredientRepository ingredientRepo,
+            UserRepository userRepo) {
         this.ingredientRepo = ingredientRepo;
+        this.userRepo = userRepo;
     }
 
     @ModelAttribute
@@ -58,6 +64,13 @@ public class DesignTacoController {
     @ModelAttribute(name = "taco")
     public Taco taco() {
         return new Taco();
+    }
+
+    @ModelAttribute(name = "user")
+    public User user(Principal principal){
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        return user;
     }
 
     @GetMapping

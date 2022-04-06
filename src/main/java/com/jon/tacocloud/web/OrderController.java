@@ -31,28 +31,39 @@ public class OrderController {
 
     private OrderProps props;
     private OrderRepository orderRepo;
-    //1. private UserRepository userRepository;
-   
-    public OrderController(OrderRepository orderRepo, 
-                        OrderProps props) {
+    // 1. private UserRepository userRepository;
+
+    public OrderController(OrderRepository orderRepo,
+            OrderProps props) {
         this.orderRepo = orderRepo;
         this.props = props;
-        //1. this.userRepository = userRepositor;
+        // 1. this.userRepository = userRepositor;
     }
 
     @GetMapping("/current")
     public String orderForm(@ModelAttribute TacoOrder tacoOrder,
             @AuthenticationPrincipal User user
-            //1. Principal principal
-            //2. Authentication authentication
-            ) {
-        //1. User user = userRepository.findByUsername(principal.getName());
-        //2. User user = (User) authentication.getPrincipal();
+    // 1. Principal principal
+    // 2. Authentication authentication
+    ) {
+        // 1. User user = userRepository.findByUsername(principal.getName());
+        // 2. User user = (User) authentication.getPrincipal();
 
         if (tacoOrder.getDeliveryName() == null) {
             tacoOrder.setDeliveryName(user.getFullname());
         }
-
+        if (tacoOrder.getDeliveryStreet() == null) {
+            tacoOrder.setDeliveryStreet(user.getStreet());
+        }
+        if (tacoOrder.getDeliveryCity() == null) {
+            tacoOrder.setDeliveryCity(user.getCity());
+        }
+        if (tacoOrder.getDeliveryState() == null) {
+            tacoOrder.setDeliveryState(user.getState());
+        }
+        if (tacoOrder.getDeliveryZip() == null) {
+            tacoOrder.setDeliveryZip(user.getZip());
+        }
         return "orderForm";
     }
 
@@ -60,17 +71,18 @@ public class OrderController {
     public String processOrder(@Valid TacoOrder order, Errors errors,
             SessionStatus sessionStatus,
             @AuthenticationPrincipal User user
-            //1. Principal principal
-            //2. Authentication authentication
-            ) {
+    // 1. Principal principal
+    // 2. Authentication authentication
+    ) {
         // if (errors.hasErrors()) {
         // return "orderForm";
         // }
 
-        //1. User user = userRepository.findByUsername(principal.getName());
-        //2. User user = (User) authentication.getPrincipal();
-        //3. Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //3. User user = (User) authentication.getPrincipal();
+        // 1. User user = userRepository.findByUsername(principal.getName());
+        // 2. User user = (User) authentication.getPrincipal();
+        // 3. Authentication authentication =
+        // SecurityContextHolder.getContext().getAuthentication();
+        // 3. User user = (User) authentication.getPrincipal();
 
         order.setUser(user);
 
@@ -84,7 +96,7 @@ public class OrderController {
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
         Pageable pageable = PageRequest.of(0, props.getPageSize());
-        model.addAttribute("orders", orderRepo.findByUser(user, pageable));
+        model.addAttribute("orders", orderRepo.findByUserOrderByPlacedAtDesc(user, pageable));
         return "orderList";
     }
 

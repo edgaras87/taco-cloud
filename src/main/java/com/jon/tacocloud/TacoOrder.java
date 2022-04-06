@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 // import javax.validation.constraints.Digits;
 // import javax.validation.constraints.NotBlank;
@@ -24,6 +25,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "Taco_Order")
 public class TacoOrder implements Serializable {
 
     // what is this

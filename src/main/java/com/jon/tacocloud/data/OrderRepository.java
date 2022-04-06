@@ -11,6 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface OrderRepository
         extends CrudRepository<TacoOrder, Long> {
 
-        List<TacoOrder> findByUser(User user, Pageable pageable);
+        List<TacoOrder> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
 
 }
